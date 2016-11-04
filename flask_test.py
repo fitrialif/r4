@@ -18,6 +18,15 @@ def api_hello():
 
     return resp
 
+@app.route('/users/<user_id>', methods = ['GET'])
+def api_users(user_id):
+    users = {'1': 'sakura', '2': 'hanazawa', '3': 'Akano'}
+
+    if user_id in users:
+        return jsonify({'user': users[user_id]})
+    else:
+        return not_found()
+
 @app.route('/messages', methods = ['POST'])
 def api_message():
 
@@ -35,6 +44,18 @@ def api_message():
 
     else:
         return "415 Unsupported Media Type :("
+
+@app.errorhandler(404)
+def not_found():
+    message = {
+        'status': 404,
+        'message': 'Not found: ' + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+
+    return resp
+
 
 if __name__ == '__main__':
     app.run(debug=True)
