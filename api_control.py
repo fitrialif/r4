@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request, json, Response, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -18,19 +19,21 @@ def move(direction):
             result (str): Success sending request or not
         }
     """
-
     possible_directions = ['left', 'right', 'up', 'down']
 
     direction = direction.lower()
     if direction in possible_directions:
+        # Trigger movement
+        log = execute('echo "%s"' % direction)
+
+        # Response
         resp = {
             'move': direction,
+            'log': log,
             'result': 'success'
         }
-
         resp = jsonify(resp)
         resp.status_code = 202
-
         return resp
     else:
         return not_found()
@@ -45,6 +48,13 @@ def not_found():
 
     return resp
 
+
+def execute(command):
+    """Execute server os commands
+    Return log's output
+    """
+    cmd = os.popen(command, "r").read()
+    return cmd
 
 if __name__ == '__main__':
     app.run(debug=True)
