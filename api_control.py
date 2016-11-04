@@ -7,49 +7,39 @@ app = Flask(__name__)
 def api_root():
     return 'Hello World'
 
-@app.route('/hello', methods = ['GET'])
-def api_hello():
-    data = {
-        'message': 'Konnichiwa',
-        'result': 'success'
-    }
-    resp = jsonify(data)
-    resp.status_code = 200
+@app.route('/move/<direction>', methods = ['POST'])
+def move(direction):
+    """Demand R4 to move into a directinon
 
-    return resp
+    Response:
+        status_code: 202 (Accepted) - The move request is accepted for processing
+        (json): {
+            move (str): The direction has just been requested
+            result (str): Success sending request or not
+        }
+    """
 
-@app.route('/users/<user_id>', methods = ['GET'])
-def api_users(user_id):
-    users = {'1': 'sakura', '2': 'hanazawa', '3': 'Akano'}
+    possible_directions = ['left', 'right', 'up', 'down']
 
-    if user_id in users:
-        return jsonify({'user': users[user_id]})
-    else:
-        return not_found()
+    direction = direction.lower()
+    if direction in possible_directions:
+        resp = {
+            'move': direction,
+            'result': 'success'
+        }
 
-@app.route('/messages', methods = ['POST'])
-def api_message():
+        resp = jsonify(resp)
+        resp.status_code = 202
 
-    if request.headers['Content-Type'] == 'text/plain':
-        return "Text Message: " + request.data
-
-    elif request.headers['Content-Type'] == 'application/json':
-        return "JSON Message: " + json.dumps(request.json)
-
-    elif request.headers['Content-Type'] == 'application/octet-stream':
-        f = open('./binary', 'wb')
-        f.write(request.data)
-        f.close()
-        return "Binary message written!"
+        return resp
 
     else:
-        return "415 Unsupported Media Type :("
+        not_found(direction)
 
 @app.errorhandler(404)
-def not_found():
+def not_found(msg):
     message = {
-        'status': 404,
-        'message': 'Not found: ' + request.url
+        'error': 'NOT FOUND: ' + msg
     }
     resp = jsonify(message)
     resp.status_code = 404
