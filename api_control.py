@@ -32,14 +32,13 @@ def move(direction):
         resp.status_code = 202
 
         return resp
-
     else:
-        not_found(direction)
+        return not_found()
 
 @app.errorhandler(404)
-def not_found(msg):
+def not_found():
     message = {
-        'error': 'NOT FOUND: ' + msg
+        'error': 'NOT FOUND'
     }
     resp = jsonify(message)
     resp.status_code = 404
