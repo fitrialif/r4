@@ -75,6 +75,7 @@ def forward():
     """
     c1()
     c2()
+    time.sleep(1)
 
 
 def backward():
@@ -83,7 +84,7 @@ def backward():
     """
     cc1()
     cc2()
-
+    time.sleep(1)
 
 def left():
     """
@@ -91,6 +92,7 @@ def left():
     """
     stop1()
     c2()
+    time.sleep(1)
 
 
 def right():
@@ -99,3 +101,4 @@ def right():
     """
     c1()
     stop2()
+    time.sleep(1)

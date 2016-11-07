@@ -26,7 +26,14 @@ def move(direction):
     direction = direction.lower()
     if direction in possible_directions:
         # Trigger movement
-        dc.forward()
+        if direction == 'left':
+            dc.left()
+        elif direction == 'right':
+            dc.right()
+        elif direction == 'forward':
+            dc.forward()
+        elif direction == 'backward':
+            dc.backward()
 
         # Response
         resp = {
