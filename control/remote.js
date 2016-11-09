@@ -1,9 +1,6 @@
-var INTERVAL = 1000;
-
 $(document).keydown((e) => {
   if (e.keyCode == 37) {
     $('#left').addClass('active');
-    sendMoveCommand('left');
   } else if (e.keyCode == 38) {
     $('#up').addClass('active');
   } else if (e.keyCode == 39) {
@@ -24,18 +21,3 @@ $(document).keyup((e) => {
     $('#down').removeClass('active');
   }
 });
-
-function sendMoveCommand (direction) {
-  setInterval(() => {
-    $.ajax({
-      url: "localhost:5000/move/" + direction,
-      type: 'POST',
-      error: () => {
-        //
-      },
-      success: (res) => {
-        //
-      }
-    });
-  }, INTERVAL);
-}
