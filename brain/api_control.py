@@ -21,7 +21,7 @@ def move(direction):
             result (str): Success sending request or not
         }
     """
-    possible_directions = ['left', 'right', 'forward', 'backward']
+    possible_directions = ['left', 'right', 'forward', 'backward', 'stop']
 
     direction = direction.lower()
     if direction in possible_directions:
@@ -34,6 +34,8 @@ def move(direction):
             dc.forward()
         elif direction == 'backward':
             dc.backward()
+        elif direction == 'stop':
+            dc.stop()
 
         # Response
         resp = {
