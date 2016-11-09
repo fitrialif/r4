@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 
 Motor1E = 12
 Motor1A = 16
