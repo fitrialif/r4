@@ -1,13 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask import jsonify
-import dc
+# import dc
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def api_root():
-    return 'Hello World'
+    return render_template('remote.html')
 
 
 @app.route('/move/<direction>', methods=['POST'])
